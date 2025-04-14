@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Cookie Demo</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+      padding: 20px;
+      background-color: #f0f8ff;
+      color: #333;
+      border-radius: 10px;
+      max-width: 500px;
+    }
+    h1 {
+      color: #007acc;
+    }
+    input, button {
+      padding: 8px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .cookie-display {
+      margin-top: 20px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>Set a Cookie</h1>
+  <label for="cookieInput">Enter a value:</label><br>
+  <input type="text" id="cookieInput" placeholder="Type something...">
+  <button id="setCookieBtn">Set Cookie</button>
+
+  <div class="cookie-display" id="cookieOutput"></div>
+
+  <script>
+    function setCookie() {
+      const value = document.getElementById("cookieInput").value;
+      if (value) {
+        document.cookie = `userInput=${value}; path=/; max-age=31536000`; // 1 year
+        displayCookie();
+      } else {
+        alert("Please enter a value.");
+      }
+    }
+
+    function getCookie(name) {
+      const cookies = document.cookie.split("; ");
+      for (let cookie of cookies) {
+        const [key, val] = cookie.split("=");
+        if (key === name) return val;
+      }
+      return "";
+    }
+
+    function displayCookie() {
+      const savedValue = getCookie("userInput");
+      const output = document.getElementById("cookieOutput");
+      output.textContent = savedValue 
+        ? `Saved Cookie: ${decodeURIComponent(savedValue)}`
+        : "No cookie found. Please set one.";
+    }
+
+    // Add event listener instead of inline onclick
+    document.getElementById("setCookieBtn").addEventListener("click", (e) => {
+      e.preventDefault(); // Prevent any form-related submission behavior
+      setCookie();
+    });
+
+    // Show cookie on page load
+    window.onload = displayCookie;
+  </script>
+</body>
+<footer>
+    April 14th, 2025. Taryn Faccenda- cookies
+</footer>
+</html>
